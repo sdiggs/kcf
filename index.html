@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keeling Curve Foundation — hero mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --abyss:#081B29;
+    --deep:#0E2A3B;
+    --panel:#12354A;
+    --line:#1D4A63;
+    --mist:#EAF3F2;
+    --muted:#8FB2BE;
+    --cold:#3FD0C9;
+    --gold:#F4B23E;
+    --hot:#FF6B4A;
+    --bloom:#8FD14F;
+    --edge:rgba(143,178,190,.18);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 600px at 78% -10%, rgba(63,208,201,.10), transparent 60%),
+      radial-gradient(900px 500px at 8% 8%, rgba(244,178,62,.06), transparent 55%),
+      var(--abyss);
+    color:var(--mist);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+  /* ---------- top bar ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:linear-gradient(180deg, rgba(8,27,41,.92), rgba(8,27,41,.72));
+    border-bottom:1px solid var(--edge);
+  }
+  .bar{
+    max-width:1220px;margin:0 auto;padding:14px 28px;
+    display:flex;align-items:center;gap:28px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .brand .mark{
+    width:34px;height:34px;flex-shrink:0;
+    display:grid;place-items:center;
+  }
+  .brand .name{
+    font-family:"Instrument Serif",serif;
+    font-size:20px;line-height:1;letter-spacing:.2px;
+  }
+  .brand .name b{font-weight:400;display:block}
+  .brand .name span{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:9.5px;letter-spacing:.28em;color:var(--muted);
+    text-transform:uppercase;display:block;margin-top:3px;
+  }
+  nav{margin-left:auto;display:flex;align-items:center;gap:26px}
+  nav .navlink{
+    font-size:14px;color:var(--mist);opacity:.82;
+    padding:6px 0;position:relative;transition:opacity .2s;
+  }
+  nav .navlink::after{
+    content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:0;
+    background:var(--cold);transition:width .22s ease;
+  }
+  nav .navlink:hover,nav .navlink:focus-visible{opacity:1}
+  nav .navlink:hover::after,nav .navlink:focus-visible::after{width:100%}
+  .donate{
+    background:var(--gold);color:#20160A;font-weight:600;font-size:14px;
+    padding:9px 18px;border-radius:2px;transition:transform .15s, box-shadow .2s;
+    box-shadow:0 0 0 rgba(244,178,62,0);
+  }
+  .donate:hover,.donate:focus-visible{transform:translateY(-1px);box-shadow:0 6px 22px rgba(244,178,62,.28)}
+  .menu-btn{display:none;background:none;border:1px solid var(--edge);color:var(--mist);
+    padding:8px 10px;border-radius:2px;font-size:18px;line-height:1;cursor:pointer}
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:1220px;margin:0 auto;
+    padding:58px 28px 40px;
+    display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--cold);margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--cold);display:inline-block}
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--hot);
+    box-shadow:0 0 0 0 rgba(255,107,74,.6);animation:beat 2.4s infinite}
+  @keyframes beat{
+    0%{box-shadow:0 0 0 0 rgba(255,107,74,.55)}
+    70%{box-shadow:0 0 0 9px rgba(255,107,74,0)}
+    100%{box-shadow:0 0 0 0 rgba(255,107,74,0)}
+  }
+  h1{
+    font-family:"Instrument Serif",serif;font-weight:400;
+    font-size:clamp(46px,6.6vw,86px);line-height:.98;letter-spacing:-.5px;
+    margin-bottom:20px;
+  }
+  h1 em{font-style:italic;color:var(--gold)}
+  .lede{
+    font-size:19px;line-height:1.55;color:#CDE0E2;max-width:30ch;margin-bottom:32px;
+  }
+  .cta-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .cta{
+    display:inline-flex;align-items:center;gap:10px;
+    background:transparent;color:var(--mist);border:1px solid var(--cold);
+    padding:13px 22px;border-radius:2px;font-weight:500;font-size:15px;
+    transition:background .2s,color .2s,gap .2s;
+  }
+  .cta:hover,.cta:focus-visible{background:var(--cold);color:#062028;gap:14px}
+  .cta .arw{transition:transform .2s}
+  .cta:hover .arw{transform:translateX(3px)}
+  .ppm{
+    font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .ppm b{color:var(--mist);font-weight:500;font-size:15px}
+  .ppm b i{color:var(--hot);font-style:normal;font-size:12px;margin-left:6px}
+
+  /* ---------- carousel / instrument viewport ---------- */
+  .scope{
+    position:relative;border:1px solid var(--line);border-radius:4px;
+    background:linear-gradient(180deg,var(--deep),var(--panel));
+    box-shadow:0 26px 70px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.04);
+    overflow:hidden;
+  }
+  .scope-top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 14px;border-bottom:1px solid var(--edge);
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+    color:var(--muted);text-transform:uppercase;
+  }
+  .scope-top .live{display:flex;align-items:center;gap:8px;color:var(--mist)}
+  .scope-top .live .dot{width:6px;height:6px;border-radius:50%;background:var(--bloom);
+    box-shadow:0 0 8px var(--bloom);animation:blink 1.6s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+  .stage{position:relative;aspect-ratio:4/3;background:#04121C}
+  .slide{
+    position:absolute;inset:0;opacity:0;transition:opacity .7s ease;
+    display:flex;flex-direction:column;
+  }
+  .slide.on{opacity:1}
+  .slide svg{width:100%;height:100%;display:block}
+  .caption{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:16px 16px 14px;
+    background:linear-gradient(0deg, rgba(4,18,28,.94) 20%, rgba(4,18,28,0));
+    display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+  }
+  .caption .txt h3{
+    font-family:"Instrument Serif",serif;font-weight:400;font-size:24px;line-height:1.05;margin-bottom:5px;
+  }
+  .caption .txt p{font-size:12.5px;color:var(--muted);line-height:1.4;max-width:34ch}
+  .metric{
+    text-align:right;font-family:"IBM Plex Mono",monospace;flex-shrink:0;
+  }
+  .metric .val{font-size:22px;font-weight:500;line-height:1;display:block}
+  .metric .lbl{font-size:9.5px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:5px;display:block}
+
+  .scope-btm{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 14px;border-top:1px solid var(--edge);
+  }
+  .dots{display:flex;gap:8px}
+  .dots button{
+    width:26px;height:3px;border-radius:2px;border:none;cursor:pointer;padding:0;
+    background:var(--line);transition:background .25s;
+  }
+  .dots button[aria-current="true"]{background:var(--cold)}
+  .arrows{display:flex;gap:6px}
+  .arrows button{
+    width:30px;height:26px;border:1px solid var(--edge);background:transparent;color:var(--mist);
+    border-radius:2px;cursor:pointer;font-size:13px;line-height:1;transition:background .18s,border-color .18s;
+  }
+  .arrows button:hover,.arrows button:focus-visible{background:var(--panel);border-color:var(--cold)}
+  .mockflag{
+    position:absolute;top:0;right:0;z-index:3;
+    font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.16em;
+    color:var(--muted);background:rgba(4,18,28,.6);padding:4px 8px;border-bottom-left-radius:4px;
+    text-transform:uppercase;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:920px){
+    .hero{grid-template-columns:1fr;gap:38px;padding-top:40px}
+    nav{display:none}
+    .menu-btn{display:block;margin-left:auto}
+  }
+  @media (max-width:520px){
+    .bar{padding:12px 18px}
+    .hero{padding:34px 18px 30px}
+    .caption .txt p{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:opacity .2s!important}
+    html{scroll-behavior:auto}
+  }
+  :focus-visible{outline:2px solid var(--cold);outline-offset:3px;border-radius:2px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="#" aria-label="Keeling Curve Foundation home">
+      <span class="mark" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+          <circle cx="17" cy="17" r="16" stroke="#1D4A63"/>
+          <polyline points="3,25 8,22 11,24 15,19 18,21 22,15 25,17 31,9"
+            fill="none" stroke="#F4B23E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="name"><b>Keeling Curve</b><span>Foundation</span></span>
+    </a>
+    <nav aria-label="Primary">
+      <a class="navlink" href="#">About Us</a>
+      <a class="navlink" href="#">The Keeling Curve</a>
+      <a class="navlink" href="#">Learn More</a>
+      <a class="navlink" href="#">Get Involved</a>
+      <a class="donate" href="#">Donate</a>
+    </nav>
+    <button class="menu-btn" aria-label="Open menu">≡</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="intro">
+    <span class="eyebrow"><span class="pulse" aria-hidden="true"></span>Watching Earth since Mauna Loa · 1958</span>
+    <h1>Action requires <em>awareness</em></h1>
+    <p class="lede">Long-term observations of Earth's environment and climate — the records that let us see change before it's too late to answer.</p>
+    <div class="cta-row">
+      <a class="cta" href="#">Champion long-term observations <span class="arw">➔</span></a>
+      <div class="ppm" aria-label="Latest atmospheric carbon dioxide reading">
+        <span>ATMOSPHERIC CO₂ · MAUNA LOA</span>
+        <b>429.6 ppm <i>▲ +2.3 / yr</i></b>
+      </div>
+    </div>
+  </div>
+
+  <!-- instrument viewport / carousel -->
+  <div class="scope">
+    <div class="scope-top">
+      <span class="live"><span class="dot" aria-hidden="true"></span>Live observation feed</span>
+      <span id="scope-coord">— · —</span>
+    </div>
+
+    <div class="stage" id="stage" aria-roledescription="carousel" aria-label="Current climate observations">
+      <span class="mockflag">Illustrative · mock data</span>
+
+      <!-- 1 · SST anomaly -->
+      <div class="slide on" role="group" aria-label="1 of 5: Sea surface temperature anomaly">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Warped thermal field showing a warm sea surface temperature anomaly in the northeast Pacific">
+          <defs>
+            <linearGradient id="sst" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#123A4E"/>
+              <stop offset="0.38" stop-color="#3FD0C9"/>
+              <stop offset="0.62" stop-color="#F4B23E"/>
+              <stop offset="1" stop-color="#FF6B4A"/>
+            </linearGradient>
+            <filter id="noiseSST"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="3" seed="7"/>
+              <feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.16"/></feComponentTransfer></filter>
+          </defs>
+          <rect width="400" height="300" fill="#04121C"/>
+          <rect width="400" height="300" fill="url(#sst)" opacity="0.9"/>
+          <rect width="400" height="300" filter="url(#noiseSST)"/>
+          <g fill="none" stroke="#04121C" stroke-opacity="0.35" stroke-width="1.2">
+            <path d="M-10,90 C80,60 150,120 240,80 330,45 380,90 420,70"/>
+            <path d="M-10,140 C80,110 150,175 250,130 340,95 380,145 420,120"/>
+            <path d="M-10,195 C90,165 160,225 250,185 340,150 385,200 420,175"/>
+          </g>
+          <path d="M0,250 C60,240 110,258 150,246 200,232 240,262 290,244 330,230 370,252 400,238 L400,300 0,300Z"
+            fill="#04121C" opacity="0.85"/>
+          <path d="M0,250 C60,240 110,258 150,246 200,232 240,262 290,244 330,230 370,252 400,238"
+            fill="none" stroke="#8FB2BE" stroke-opacity="0.4" stroke-width="1"/>
+        </svg>
+        <div class="caption">
+          <div class="txt">
+            <h3>Marine heatwave, NE Pacific</h3>
+            <p>A persistent warm pool is pushing surface temperatures far above the 1991–2020 baseline.</p>
+          </div>
+          <div class="metric"><span class="val" style="color:var(--hot)">+3.8°C</span><span class="lbl">SST anomaly</span></div>
+        </div>
+      </div>
+
+      <!-- 2 · Harmful algal bloom -->
+      <div class="slide" role="group" aria-label="2 of 5: Harmful algal bloom">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Green filaments of a harmful algal bloom swirling through dark coastal water">
+          <defs>
+            <radialGradient id="water" cx="30%" cy="20%" r="90%">
+              <stop offset="0" stop-color="#0E3040"/><stop offset="1" stop-color="#04121C"/>
+            </radialGradient>
+            <filter id="blur1"><feGaussianBlur stdDeviation="1.4"/></filter>
+          </defs>
+          <rect width="400" height="300" fill="url(#water)"/>
+          <g filter="url(#blur1)" fill="none" stroke-linecap="round">
+            <path d="M-20,210 C60,150 120,250 200,180 280,120 340,210 430,150" stroke="#4E8F3A" stroke-width="26" opacity="0.55"/>
+            <path d="M-20,230 C70,175 130,265 210,200 290,145 350,225 430,170" stroke="#6FB33F" stroke-width="18" opacity="0.6"/>
+            <path d="M-20,250 C80,200 140,280 220,225 300,175 360,245 430,200" stroke="#8FD14F" stroke-width="11" opacity="0.75"/>
+            <path d="M-20,270 C90,230 150,295 230,250 310,205 370,265 430,230" stroke="#B6E86A" stroke-width="6" opacity="0.8"/>
+          </g>
+          <path d="M0,120 C70,110 120,128 180,118 250,106 320,126 400,112 L400,0 0,0Z" fill="#0A2331" opacity="0.7"/>
+          <path d="M0,120 C70,110 120,128 180,118 250,106 320,126 400,112" fill="none" stroke="#8FB2BE" stroke-opacity="0.35" stroke-width="1"/>
+        </svg>
+        <div class="caption">
+          <div class="txt">
+            <h3>Harmful algal bloom, Monterey Bay</h3>
+            <p>Chlorophyll-a spiking as a Pseudo-nitzschia bloom spreads along the coast.</p>
+          </div>
+          <div class="metric"><span class="val" style="color:var(--bloom)">42.7</span><span class="lbl">mg/m³ chl-a</span></div>
+        </div>
+      </div>
+
+      <!-- 3 · Coral bleaching -->
+      <div class="slide" role="group" aria-label="3 of 5: Coral bleaching">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A reef pattern fading from living color into bleached white">
+          <defs>
+            <linearGradient id="reef" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#1E8F86"/><stop offset="0.5" stop-color="#7ABFB0"/><stop offset="1" stop-color="#EAF3F2"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="300" fill="#0A2735"/>
+          <g stroke="#04121C" stroke-opacity="0.5" stroke-width="1">
+            <g fill="url(#reef)">
+              <circle cx="55" cy="90" r="30"/><circle cx="120" cy="130" r="24"/><circle cx="70" cy="180" r="26"/>
+              <circle cx="160" cy="80" r="20"/><circle cx="185" cy="160" r="30"/><circle cx="130" cy="220" r="22"/>
+              <circle cx="240" cy="110" r="26"/><circle cx="225" cy="215" r="24"/><circle cx="300" cy="150" r="30"/>
+              <circle cx="290" cy="70" r="20"/><circle cx="345" cy="215" r="26"/><circle cx="355" cy="105" r="22"/>
+              <circle cx="35" cy="245" r="18"/><circle cx="180" cy="255" r="18"/><circle cx="270" cy="255" r="20"/>
+            </g>
+          </g>
+          <rect width="400" height="300" fill="url(#reef)" opacity="0.12"/>
+        </svg>
+        <div class="caption">
+          <div class="txt">
+            <h3>Reef bleaching, Coral Sea</h3>
+            <p>Sustained heat stress has pushed accumulated exposure past the severe-bleaching threshold.</p>
+          </div>
+          <div class="metric"><span class="val" style="color:var(--gold)">14.2</span><span class="lbl">°C-weeks DHW</span></div>
+        </div>
+      </div>
+
+      <!-- 4 · Arctic sea ice -->
+      <div class="slide" role="group" aria-label="4 of 5: Arctic sea-ice minimum">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Shrunken white ice cap over dark ocean, with a dashed outline showing the historical median extent">
+          <defs>
+            <radialGradient id="ice" cx="50%" cy="45%" r="60%">
+              <stop offset="0" stop-color="#F3FAFF"/><stop offset="1" stop-color="#BFE0E8"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="#071E2B"/>
+          <g fill="none" stroke="#1D4A63" stroke-opacity="0.5"><circle cx="200" cy="150" r="120"/><circle cx="200" cy="150" r="80"/><circle cx="200" cy="150" r="40"/></g>
+          <path d="M200,45 C255,55 290,90 285,140 300,175 265,215 210,240 150,255 110,215 118,165 95,120 140,70 200,45Z"
+            fill="none" stroke="#8FB2BE" stroke-width="1.4" stroke-dasharray="5 5" stroke-opacity="0.8"/>
+          <path d="M200,90 C238,96 258,118 252,150 262,176 235,205 200,212 168,206 148,180 155,152 145,122 168,98 200,90Z"
+            fill="url(#ice)" stroke="#EAF3F2" stroke-opacity="0.5"/>
+          <text x="200" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#8FB2BE" letter-spacing="2">DASHED = 1981–2010 MEDIAN</text>
+        </svg>
+        <div class="caption">
+          <div class="txt">
+            <h3>September sea-ice minimum, Arctic</h3>
+            <p>This year's ice extent ranks among the lowest in the satellite record.</p>
+          </div>
+          <div class="metric"><span class="val" style="color:var(--cold)">3.9</span><span class="lbl">M km² extent</span></div>
+        </div>
+      </div>
+
+      <!-- 5 · Mauna Loa CO2 -->
+      <div class="slide" role="group" aria-label="5 of 5: Atmospheric carbon dioxide at Mauna Loa">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The rising sawtooth of the Keeling Curve, climbing left to right">
+          <defs>
+            <linearGradient id="co2fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#F4B23E" stop-opacity="0.35"/><stop offset="1" stop-color="#F4B23E" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="300" fill="#061722"/>
+          <g stroke="#12354A" stroke-width="1">
+            <line x1="0" y1="80" x2="400" y2="80"/><line x1="0" y1="140" x2="400" y2="140"/>
+            <line x1="0" y1="200" x2="400" y2="200"/><line x1="0" y1="260" x2="400" y2="260"/>
+          </g>
+          <polygon fill="url(#co2fill)" points="10,248 30,236 50,244 70,228 90,236 110,218 130,226 150,206 170,214 190,192 210,200 230,176 250,184 270,158 290,166 310,140 330,148 350,120 370,128 390,100 390,300 10,300"/>
+          <polyline fill="none" stroke="#F4B23E" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"
+            points="10,248 30,236 50,244 70,228 90,236 110,218 130,226 150,206 170,214 190,192 210,200 230,176 250,184 270,158 290,166 310,140 330,148 350,120 370,128 390,100"/>
+          <circle cx="390" cy="100" r="5" fill="#FF6B4A"><animate attributeName="r" values="5;8;5" dur="2s" repeatCount="indefinite"/></circle>
+        </svg>
+        <div class="caption">
+          <div class="txt">
+            <h3>Atmospheric CO₂, Mauna Loa</h3>
+            <p>The record Charles David Keeling began in 1958 — still rising, still counting.</p>
+          </div>
+          <div class="metric"><span class="val" style="color:var(--gold)">429.6</span><span class="lbl">ppm CO₂</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="scope-btm">
+      <div class="dots" role="tablist" aria-label="Choose observation">
+        <button aria-current="true" aria-label="Sea surface temperature"></button>
+        <button aria-label="Harmful algal bloom"></button>
+        <button aria-label="Coral bleaching"></button>
+        <button aria-label="Arctic sea ice"></button>
+        <button aria-label="Mauna Loa CO₂"></button>
+      </div>
+      <div class="arrows">
+        <button id="prev" aria-label="Previous observation">‹</button>
+        <button id="next" aria-label="Next observation">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots   = Array.prototype.slice.call(document.querySelectorAll('.dots button'));
+  var coord  = document.getElementById('scope-coord');
+  var coords = ['46.2°N · 131.0°W','36.8°N · 121.9°W','18.3°S · 147.7°E','78.0°N · 90.0°E','19.5°N · 155.6°W'];
+  var i = 0, timer;
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  function show(n){
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function(s,k){ s.classList.toggle('on', k===i); });
+    dots.forEach(function(d,k){ d.setAttribute('aria-current', k===i ? 'true':'false'); });
+    coord.textContent = coords[i];
+  }
+  function next(){ show(i+1); }
+  function prev(){ show(i-1); }
+  function restart(){ if(reduce) return; clearInterval(timer); timer = setInterval(next, 5200); }
+
+  dots.forEach(function(d,k){ d.addEventListener('click', function(){ show(k); restart(); }); });
+  document.getElementById('next').addEventListener('click', function(){ next(); restart(); });
+  document.getElementById('prev').addEventListener('click', function(){ prev(); restart(); });
+
+  var scope = document.querySelector('.scope');
+  scope.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  scope.addEventListener('mouseleave', restart);
+  scope.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'){ next(); restart(); }
+    if(e.key==='ArrowLeft'){ prev(); restart(); }
+  });
+
+  show(0); restart();
+})();
+</script>
+</body>
+</html>
