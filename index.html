@@ -185,12 +185,24 @@
     border-radius:2px;cursor:pointer;font-size:13px;line-height:1;transition:background .18s,border-color .18s;
   }
   .arrows button:hover,.arrows button:focus-visible{background:var(--panel);border-color:var(--cold)}
-  .mockflag{
-    position:absolute;top:0;right:0;z-index:3;
+  .badge{
+    position:absolute;top:0;right:0;z-index:6;
     font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.16em;
-    color:var(--muted);background:rgba(4,18,28,.6);padding:4px 8px;border-bottom-left-radius:4px;
-    text-transform:uppercase;
+    color:var(--muted);background:rgba(4,18,28,.72);padding:5px 9px;border-bottom-left-radius:4px;
+    text-transform:uppercase;text-decoration:none;transition:color .2s;
   }
+  .badge.islive{color:var(--bloom)}
+  .badge.islive:hover,.badge.islive:focus-visible{color:#B6E86A}
+  /* live nullschool embed */
+  .embed-wrap{position:absolute;inset:0;background:var(--abyss)}
+  .embed-poster{
+    position:absolute;inset:0;display:grid;place-items:center;z-index:0;
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+    color:var(--muted);text-transform:uppercase;
+  }
+  .live-embed{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:1;background:transparent}
+  .caption-live{pointer-events:none}
+  .caption-live a{pointer-events:auto}
 
   /* ---------- responsive ---------- */
   @media (max-width:920px){
@@ -257,10 +269,28 @@
     </div>
 
     <div class="stage" id="stage" aria-roledescription="carousel" aria-label="Current climate observations">
-      <span class="mockflag">Illustrative · mock data</span>
+      <a class="badge islive" id="badge" href="https://earth.nullschool.net/#current/wind/surface/level/overlay=temp/orthographic=-140,22,600" target="_blank" rel="noopener">◉ Live · nullschool ↗</a>
+
+      <!-- 0 · LIVE nullschool embed -->
+      <div class="slide on" role="group" aria-label="1 of 6: Live global temperature and wind">
+        <div class="embed-wrap">
+          <div class="embed-poster">Loading live map…</div>
+          <iframe class="live-embed"
+            src="https://earth.nullschool.net/#current/wind/surface/level/overlay=temp/orthographic=-140,22,600"
+            title="Live global surface temperature and wind — earth.nullschool.net"
+            loading="lazy" referrerpolicy="no-referrer"></iframe>
+        </div>
+        <div class="caption caption-live">
+          <div class="txt">
+            <h3>Live global conditions</h3>
+            <p>Real-time surface temperature and wind from earth.nullschool.net. Drag to spin the globe.</p>
+          </div>
+          <div class="metric"><span class="val" style="color:var(--cold)">LIVE</span><span class="lbl">nullschool feed</span></div>
+        </div>
+      </div>
 
       <!-- 1 · SST anomaly -->
-      <div class="slide on" role="group" aria-label="1 of 5: Sea surface temperature anomaly">
+      <div class="slide" role="group" aria-label="2 of 6: Sea surface temperature anomaly">
         <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Warped thermal field showing a warm sea surface temperature anomaly in the northeast Pacific">
           <defs>
             <linearGradient id="sst" x1="0" y1="0" x2="1" y2="1">
@@ -295,7 +325,7 @@
       </div>
 
       <!-- 2 · Harmful algal bloom -->
-      <div class="slide" role="group" aria-label="2 of 5: Harmful algal bloom">
+      <div class="slide" role="group" aria-label="3 of 6: Harmful algal bloom">
         <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Green filaments of a harmful algal bloom swirling through dark coastal water">
           <defs>
             <radialGradient id="water" cx="30%" cy="20%" r="90%">
@@ -323,7 +353,7 @@
       </div>
 
       <!-- 3 · Coral bleaching -->
-      <div class="slide" role="group" aria-label="3 of 5: Coral bleaching">
+      <div class="slide" role="group" aria-label="4 of 6: Coral bleaching">
         <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A reef pattern fading from living color into bleached white">
           <defs>
             <linearGradient id="reef" x1="0" y1="0" x2="1" y2="0">
@@ -352,7 +382,7 @@
       </div>
 
       <!-- 4 · Arctic sea ice -->
-      <div class="slide" role="group" aria-label="4 of 5: Arctic sea-ice minimum">
+      <div class="slide" role="group" aria-label="5 of 6: Arctic sea-ice minimum">
         <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Shrunken white ice cap over dark ocean, with a dashed outline showing the historical median extent">
           <defs>
             <radialGradient id="ice" cx="50%" cy="45%" r="60%">
@@ -377,7 +407,7 @@
       </div>
 
       <!-- 5 · Mauna Loa CO2 -->
-      <div class="slide" role="group" aria-label="5 of 5: Atmospheric carbon dioxide at Mauna Loa">
+      <div class="slide" role="group" aria-label="6 of 6: Atmospheric carbon dioxide at Mauna Loa">
         <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The rising sawtooth of the Keeling Curve, climbing left to right">
           <defs>
             <linearGradient id="co2fill" x1="0" y1="0" x2="0" y2="1">
@@ -407,7 +437,8 @@
 
     <div class="scope-btm">
       <div class="dots" role="tablist" aria-label="Choose observation">
-        <button aria-current="true" aria-label="Sea surface temperature"></button>
+        <button aria-current="true" aria-label="Live global conditions"></button>
+        <button aria-label="Sea surface temperature"></button>
         <button aria-label="Harmful algal bloom"></button>
         <button aria-label="Coral bleaching"></button>
         <button aria-label="Arctic sea ice"></button>
@@ -426,7 +457,9 @@
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var dots   = Array.prototype.slice.call(document.querySelectorAll('.dots button'));
   var coord  = document.getElementById('scope-coord');
-  var coords = ['46.2°N · 131.0°W','36.8°N · 121.9°W','18.3°S · 147.7°E','78.0°N · 90.0°E','19.5°N · 155.6°W'];
+  var badge  = document.getElementById('badge');
+  var coords = ['REAL-TIME · GLOBAL','46.2°N · 131.0°W','36.8°N · 121.9°W','18.3°S · 147.7°E','78.0°N · 90.0°E','19.5°N · 155.6°W'];
+  var liveURL = 'https://earth.nullschool.net/#current/wind/surface/level/overlay=temp/orthographic=-140,22,600';
   var i = 0, timer;
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
@@ -435,6 +468,13 @@
     slides.forEach(function(s,k){ s.classList.toggle('on', k===i); });
     dots.forEach(function(d,k){ d.setAttribute('aria-current', k===i ? 'true':'false'); });
     coord.textContent = coords[i];
+    if(i===0){
+      badge.textContent = '◉ Live · nullschool ↗';
+      badge.classList.add('islive'); badge.setAttribute('href', liveURL);
+    } else {
+      badge.textContent = 'Illustrative · mock data';
+      badge.classList.remove('islive'); badge.removeAttribute('href');
+    }
   }
   function next(){ show(i+1); }
   function prev(){ show(i-1); }
